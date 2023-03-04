@@ -31,7 +31,7 @@ const ProtectedLayout = ({ children }) => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Container>{children}</Container>
+      <Container className="pt-5">{children}</Container>
       <footer className="footer">
         <Container>
           <span className="text-muted">&copy; Your Web App Name 2023</span>

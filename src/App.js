@@ -1,11 +1,11 @@
 import ProtectedLayout from './layout/ProtectedLayout';
-import Dashboard from './modules/dashboard/Dashboard';
+import Tables from './common/Tables';
 
 function App() {
   return (
     <div className="App">
       <ProtectedLayout>
-        <Dashboard />
+        <Tables />
       </ProtectedLayout>
     </div>
   );
