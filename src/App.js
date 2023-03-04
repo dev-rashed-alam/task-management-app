@@ -6,6 +6,7 @@ import { useAuth } from './services/loginService';
 import ProtectedLayout from './layout/ProtectedLayout';
 import Task from './modules/task';
 import MemberList from './modules/members';
+import MemberForm from './modules/members/MemberForm';
 
 const ProtectedRoutes = () => {
   const auth = useAuth();
@@ -24,6 +25,7 @@ function App() {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="tasks" element={<Task />} />
               <Route path="members" element={<MemberList />} />
+              <Route path="member/new" element={<MemberForm />} />
             </Route>
           </Route>
         </Routes>
