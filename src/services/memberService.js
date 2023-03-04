@@ -3,7 +3,20 @@ import apiHandler from '../common/apiHandler';
 
 export const addNewMember = async (requestBody) => {
   try {
-    const { data } = await apiHandler.POST('addNewMember', requestBody);
+    const { data } = await apiHandler.POST('members', requestBody);
+    return data;
+  } catch ({ response }) {
+    if (response.data.message) {
+      toast.error(response.data.message);
+    } else {
+      toast.error('There was an error in the server side!');
+    }
+  }
+};
+
+export const fetchAllMembers = async () => {
+  try {
+    const { data } = await apiHandler.GET('members');
     return data;
   } catch ({ response }) {
     if (response.data.message) {

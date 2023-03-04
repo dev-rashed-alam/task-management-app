@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../../assets/styles/Table.css';
 import { useNavigate } from 'react-router-dom';
+import { fetchAllMembers } from '../../services/memberService';
 
 const MemberList = () => {
   const navigator = useNavigate();
+
+  useEffect(() => {
+    fetchAllMembers();
+  }, []);
 
   return (
     <>
