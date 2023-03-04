@@ -19,7 +19,6 @@
         "react"
     ],
     "rules": {
-        "react/react-in-jsx-scope": "off",
-        "react/prop-types": [2, { "ignore": ["children"] }]
+        "react/react-in-jsx-scope": "off"
     }
 }

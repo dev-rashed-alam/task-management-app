@@ -2,8 +2,9 @@ import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import logo from '../assets/images/logo.png';
 import '../assets/styles/Layout.css';
+import { Outlet } from 'react-router-dom';
 
-const ProtectedLayout = ({ children }) => {
+const ProtectedLayout = () => {
   return (
     <div>
       <Navbar bg="light" expand="lg">
@@ -31,10 +32,12 @@ const ProtectedLayout = ({ children }) => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Container className="pt-5">{children}</Container>
+      <Container className="pt-5">
+        <Outlet />
+      </Container>
       <footer className="footer">
         <Container>
-          <span className="text-muted">&copy; Your Web App Name 2023</span>
+          <span className="text-muted">&copy; Task management app 2023</span>
         </Container>
       </footer>
     </div>

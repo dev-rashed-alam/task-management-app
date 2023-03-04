@@ -1,36 +1,49 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
 import '../../assets/styles/Table.css';
 
-const TableUI = () => {
+const TaskList = () => {
   return (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Date</th>
+    <table className="crud-table">
+      <thead className="crud-table__header">
+        <tr className="crud-table__row">
+          <th className="crud-table__header-cell">Id</th>
+          <th className="crud-table__header-cell">Title</th>
+          <th className="crud-table__header-cell">Description</th>
+          <th className="crud-table__header-cell">Actions</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>Title 1</td>
-          <td>Description 1</td>
-          <td>March 1, 2023</td>
-        </tr>
-        <tr>
-          <td>Title 2</td>
-          <td>Description 2</td>
-          <td>February 28, 2023</td>
-        </tr>
-        <tr>
-          <td>Title 3</td>
-          <td>Description 3</td>
-          <td>February 27, 2023</td>
+      <tbody className="crud-table__body">
+        <tr className="crud-table__row">
+          <td className="crud-table__cell">
+            <div className="crud-table__cell-label">Id</div>
+            50
+          </td>
+          <td className="crud-table__cell">
+            <div className="crud-table__cell-label">Title</div>
+            38700 Werner Groves
+          </td>
+          <td className="crud-table__cell">
+            <div className="crud-table__cell-label">Description</div>
+            Health orchestrate Kansas
+          </td>
+          <td className="crud-table__cell">
+            <div className="crud-table__cell-label">Actions</div>
+            <button className="crud-button crud-button--primary" type="button">
+              Read
+            </button>
+            &nbsp;
+            <button className="crud-button crud-button--positive" type="button">
+              Edit
+            </button>
+            &nbsp;
+            <button className="crud-button crud-button--negative" type="button">
+              Delete
+            </button>
+          </td>
         </tr>
       </tbody>
-    </Table>
+    </table>
   );
 };
 
-export default TableUI;
+export default TaskList;
