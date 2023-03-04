@@ -1,9 +1,9 @@
-import Login from './modules/authentication/Login';
+import ProtectedLayout from './layout/ProtectedLayout';
 
 function App() {
   return (
     <div className="App">
-      <Login />
+      <ProtectedLayout></ProtectedLayout>
     </div>
   );
 }
