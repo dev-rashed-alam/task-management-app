@@ -21,6 +21,11 @@ const apiHandler = {
       headers
     });
   },
+  PUT: (endPointKey, id, requestBody) => {
+    return axios.put(apiEndPoints[endPointKey] + `/${id}`, requestBody, {
+      headers
+    });
+  },
   DELETE: (endPointKey) => {
     return axios.delete(apiEndPoints[endPointKey], {
       headers

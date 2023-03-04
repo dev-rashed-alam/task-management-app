@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import '../../assets/styles/Table.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { fetchAllMembers } from '../../services/memberService';
 import { useDispatch } from 'react-redux';
 import { saveAllMembers, useMembers } from '../../redux/member/memberSlice';
@@ -20,7 +20,9 @@ const MemberList = () => {
     return members?.map((member) => {
       return (
         <tr className="crud-table__row" key={`member_${member.id}`}>
-          <td className="crud-table__cell">{member.name}</td>
+          <td className="crud-table__cell">
+            <Link to={`/member/${member.id}`}>{member.name}</Link>
+          </td>
           <td className="crud-table__cell">{member.tasks.length}</td>
           <td className="crud-table__cell">
             <button className="crud-button crud-button--negative" type="button">

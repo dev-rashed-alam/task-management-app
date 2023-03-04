@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../assets/styles/Form.css';
-import { addNewMember } from '../../services/memberService';
+import { addNewMember, fetchMemberById, updateMemberById } from '../../services/memberService';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const MemberForm = () => {
   const [inputData, setInputData] = useState({});
   const [errors, setErrors] = useState({});
   const navigator = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      fetchMemberById(id).then((data) => {
+        setInputData({
+          name: data.name,
+          email: data.email
+        });
+      });
+    }
+  }, [id]);
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -27,9 +39,9 @@ const MemberForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isValidForm()) return;
-    const user = await addNewMember(inputData);
+    const user = id ? await updateMemberById(id, inputData) : await addNewMember(inputData);
     if (user) {
-      toast.success('Member was created successful');
+      toast.success(`Member was ${id ? 'updated' : 'created'} successful`);
       navigator('/members');
     }
   };

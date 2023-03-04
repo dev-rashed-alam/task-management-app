@@ -26,6 +26,7 @@ function App() {
               <Route path="tasks" element={<Task />} />
               <Route path="members" element={<MemberList />} />
               <Route path="members/new" element={<MemberForm />} />
+              <Route path="member/:id" element={<MemberForm />} />
             </Route>
           </Route>
         </Routes>
