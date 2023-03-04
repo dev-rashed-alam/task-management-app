@@ -52,3 +52,16 @@ export const updateMemberById = async (id, requestBody) => {
     }
   }
 };
+
+export const deleteMemberById = async (id) => {
+  try {
+    const { data } = await apiHandler.DELETE('members', id);
+    return data;
+  } catch ({ response }) {
+    if (response.data.message) {
+      toast.error(response.data.message);
+    } else {
+      toast.error('There was an error in the server side!');
+    }
+  }
+};

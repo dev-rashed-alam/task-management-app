@@ -4,5 +4,11 @@ export const memberReducers = {
       ...state,
       members: action.payload
     };
+  },
+  removeMember: (state, action) => {
+    return {
+      ...state,
+      members: state.members.filter((member) => member.id !== action.payload)
+    };
   }
 };

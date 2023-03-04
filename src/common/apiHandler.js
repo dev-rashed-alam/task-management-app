@@ -26,8 +26,8 @@ const apiHandler = {
       headers
     });
   },
-  DELETE: (endPointKey) => {
-    return axios.delete(apiEndPoints[endPointKey], {
+  DELETE: (endPointKey, id) => {
+    return axios.delete(apiEndPoints[endPointKey] + `/${id}`, {
       headers
     });
   }

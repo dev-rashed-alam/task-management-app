@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import '../../assets/styles/Table.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { fetchAllMembers } from '../../services/memberService';
+import { deleteMemberById, fetchAllMembers } from '../../services/memberService';
 import { useDispatch } from 'react-redux';
-import { saveAllMembers, useMembers } from '../../redux/member/memberSlice';
+import { removeMember, saveAllMembers, useMembers } from '../../redux/member/memberSlice';
 
 const MemberList = () => {
   const navigator = useNavigate();
@@ -16,6 +16,13 @@ const MemberList = () => {
     });
   }, []);
 
+  const handleMemberDelete = async (id) => {
+    const user = await deleteMemberById(id);
+    if (user) {
+      dispatch(removeMember(id));
+    }
+  };
+
   const renderMemberList = () => {
     return members?.map((member) => {
       return (
@@ -25,7 +32,10 @@ const MemberList = () => {
           </td>
           <td className="crud-table__cell">{member.tasks.length}</td>
           <td className="crud-table__cell">
-            <button className="crud-button crud-button--negative" type="button">
+            <button
+              className="crud-button crud-button--negative"
+              type="button"
+              onClick={() => handleMemberDelete(member.id)}>
               Delete
             </button>
           </td>

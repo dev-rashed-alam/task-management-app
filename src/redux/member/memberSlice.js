@@ -12,7 +12,7 @@ const memberSlice = createSlice({
   reducers: memberReducers
 });
 
-export const { saveAllMembers } = memberSlice.actions;
+export const { saveAllMembers, removeMember } = memberSlice.actions;
 
 export const useMembers = () => useSelector((state) => state.member);
 
