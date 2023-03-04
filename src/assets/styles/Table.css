@@ -33,23 +33,15 @@
     background-color: #000;
     min-height: 1rem;
     color: #fff;
-    border-radius: 3px;
+    border-radius: 0;
     padding: 0.6rem 1rem;
     border: none;
     font-size: 1rem;
     cursor: pointer !important;
 }
 
-.crud-button--primary {
-    background-color: #2185d0;
-}
-
 .crud-button--negative {
-    background-color: #f51010;
-}
-
-.crud-button--positive {
-    background-color: #21d05b;
+    background-color: tomato;
 }
 
 .page-heading {
@@ -58,11 +50,11 @@
 }
 
 .custom-btn {
-    background-color: tomato !important;
+    background-color: dodgerblue !important;
     border: none !important;
     border-radius: 0 !important;
     font-weight: bold;
-    width: 150px;
+    width: 200px;
     height: 40px;
     cursor: pointer;
 }
