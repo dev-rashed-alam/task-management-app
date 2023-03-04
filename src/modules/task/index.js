@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import '../../assets/styles/Table.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
 import { deleteTaskById, fetchAllTasks } from '../../services/taskService';
 import { removeTask, saveAllTasks, useTasks } from '../../redux/task/taskSlice';
+import { changeDate } from '../../helpers/helpers';
 
 const TaskList = () => {
   const { tasks } = useTasks();
@@ -33,11 +34,14 @@ const TaskList = () => {
     return tasks?.map((task) => {
       return (
         <tr className="crud-table__row" key={`task_${task.id}`}>
-          <td className="crud-table__cell">{task.title}</td>
+          <td className="crud-table__cell">
+            <Link to={`/tasks/${task.id}`}>{task.title}</Link>
+          </td>
           <td className="crud-table__cell">
             <p dangerouslySetInnerHTML={{ __html: task.description }} />
           </td>
           <td className="crud-table__cell">{task.assignTo?.label}</td>
+          <td className="crud-table__cell">{changeDate(task.createdAt)}</td>
           <td className="crud-table__cell">
             <button
               className="crud-button crud-button--negative"
@@ -71,6 +75,7 @@ const TaskList = () => {
           <tr className="crud-table__row">
             <th className="crud-table__header-cell">Title</th>
             <th className="crud-table__header-cell">Description</th>
+            <th className="crud-table__header-cell">Creation date</th>
             <th className="crud-table__header-cell">Assign to</th>
             <th className="crud-table__header-cell">Actions</th>
           </tr>

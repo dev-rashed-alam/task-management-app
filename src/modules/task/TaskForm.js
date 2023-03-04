@@ -5,16 +5,34 @@ import '../../assets/styles/Form.css';
 import { fetchAllMembers, fetchMemberById, updateMemberById } from '../../services/memberService';
 import { useDispatch } from 'react-redux';
 import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
-import { addNewTask } from '../../services/taskService';
+import { addNewTask, fetchTaskById, updateTaskById } from '../../services/taskService';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const TaskForm = () => {
   const [inputData, setInputData] = useState({});
+  const [prevAssignedUser, setPrevAssignedUser] = useState({});
   const [userList, setUserList] = useState([]);
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const navigator = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    dispatch(openLoader());
+    if (id) {
+      fetchTaskById(id)
+        .then((task) => {
+          setInputData({
+            title: task.title,
+            description: task.description,
+            user: task.assignTo
+          });
+          setPrevAssignedUser(task.assignTo);
+        })
+        .finally(() => dispatch(closeLoader()));
+    }
+  }, [id]);
 
   useEffect(() => {
     dispatch(openLoader());
@@ -46,19 +64,30 @@ const TaskForm = () => {
     if (!isValidForm()) return;
     dispatch(openLoader());
     const postData = {
-      createdAt: Date.now(),
       title: inputData.title,
       description: inputData.description,
       assignTo: inputData.user
     };
-    const task = await addNewTask(postData);
+    if (!id) {
+      postData.createdAt = Date.now();
+    }
+    const task = id ? await updateTaskById(id, postData) : await addNewTask(postData);
     if (task) {
-      if (inputData.user?.value) {
-        const user = await fetchMemberById(inputData.user.value);
-        user.tasks = [...user.tasks, task.id];
-        await updateMemberById(user.id, user);
+      if (inputData.user?.value && prevAssignedUser?.value !== inputData.user?.value) {
+        const userData = await fetchMemberById(inputData.user.value);
+        userData.tasks = [...userData.tasks, task.id];
+        await updateMemberById(userData.id, { ...userData, tasks: [...new Set(userData.tasks)] });
       }
-      navigator('/task');
+
+      if (prevAssignedUser?.value && prevAssignedUser.value !== inputData.user?.value) {
+        const userData = await fetchMemberById(prevAssignedUser.value);
+        let newTasks = userData.tasks.filter((item) => parseInt(item) !== parseInt(task.id));
+        await updateMemberById(prevAssignedUser.value, {
+          ...userData,
+          tasks: [...new Set(newTasks)]
+        });
+      }
+      navigator('/tasks');
       toast.success(`Task was created successful!`);
     }
     dispatch(closeLoader());

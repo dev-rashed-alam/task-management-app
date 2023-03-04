@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const generateRandomString = (strLength) => {
   const length = typeof strLength === 'number' && strLength > 0 ? strLength : false;
   if (length) {
@@ -14,4 +16,9 @@ export const generateRandomString = (strLength) => {
     return output;
   }
   return false;
+};
+
+export const changeDate = (date) => {
+  const dateObj = new Date(date);
+  return moment(dateObj).format('DD MMM, YY');
 };

@@ -29,6 +29,7 @@ function App() {
               <Route path="member/:id" element={<MemberForm />} />
               <Route path="tasks" element={<Task />} />
               <Route path="tasks/new" element={<TaskForm />} />
+              <Route path="tasks/:id" element={<TaskForm />} />
             </Route>
           </Route>
         </Routes>
