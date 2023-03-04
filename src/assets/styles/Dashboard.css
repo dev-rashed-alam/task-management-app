@@ -1,0 +1,69 @@
+* {
+    box-sizing: border-box;
+    font-family: sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+/* xs */
+p {
+    color: #ccc;
+    font-size: 1.25rem;
+    padding: 0 0.3rem;
+    font-weight: 400;
+}
+section.dashboard-buttons {
+    margin: 3rem auto;
+}
+section.dashboard-buttons .tile-button {
+    list-style: none;
+    overflow: hidden;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+}
+section.dashboard-buttons .tile-button li {
+    padding: 50px 25px;
+    background-color: dodgerblue;
+    color: white;
+    display: block;
+    max-width: 100%;
+    border-radius: 5px;
+    margin: 5px;
+    text-align: center;
+    overflow: hidden;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+section.dashboard-buttons .tile-button li small {
+    font-weight: 400;
+    font-style: italic;
+}
+
+section.dashboard-buttons .tile-button li .button-content{
+    font-size: 18px;
+}
+
+section.dashboard-buttons .tile-button i {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+/* small */
+@media all and (min-width: 20em) {
+    .dashboard-buttons {
+        margin-left: 1rem;
+    }
+
+    .tile-button li {
+        width: 45.5%;
+        float: left;
+    }
+}
+/* large */
+@media all and (min-width: 40em) {
+    .tile-button li {
+        width: 23%;
+    }
+}
