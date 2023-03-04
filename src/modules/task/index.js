@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import '../../assets/styles/Table.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
 import { fetchAllTasks } from '../../services/taskService';
+import { saveAllTasks, useTasks } from '../../redux/task/taskSlice';
 
 const TaskList = () => {
-  const [tasks, setTasks] = useState([]);
+  const { tasks } = useTasks();
   const navigator = useNavigate();
   const dispatch = useDispatch();
 
@@ -14,7 +15,7 @@ const TaskList = () => {
     dispatch(openLoader());
     fetchAllTasks()
       .then((data) => {
-        setTasks(data);
+        dispatch(saveAllTasks(data));
       })
       .finally(() => dispatch(closeLoader()));
   }, []);
