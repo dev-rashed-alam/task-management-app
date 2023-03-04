@@ -3,8 +3,8 @@ import '../../assets/styles/Table.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
-import { fetchAllTasks } from '../../services/taskService';
-import { saveAllTasks, useTasks } from '../../redux/task/taskSlice';
+import { deleteTaskById, fetchAllTasks } from '../../services/taskService';
+import { removeTask, saveAllTasks, useTasks } from '../../redux/task/taskSlice';
 
 const TaskList = () => {
   const { tasks } = useTasks();
@@ -20,6 +20,15 @@ const TaskList = () => {
       .finally(() => dispatch(closeLoader()));
   }, []);
 
+  const handleTaskDelete = async (id) => {
+    dispatch(openLoader());
+    const task = await deleteTaskById(id);
+    if (task) {
+      dispatch(removeTask(id));
+    }
+    dispatch(closeLoader());
+  };
+
   const renderTasks = () => {
     return tasks?.map((task) => {
       return (
@@ -30,7 +39,10 @@ const TaskList = () => {
           </td>
           <td className="crud-table__cell">{task.assignTo?.label}</td>
           <td className="crud-table__cell">
-            <button className="crud-button crud-button--negative" type="button">
+            <button
+              className="crud-button crud-button--negative"
+              type="button"
+              onClick={() => handleTaskDelete(task.id)}>
               Delete
             </button>
           </td>
