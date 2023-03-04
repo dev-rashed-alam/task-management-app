@@ -8,6 +8,7 @@ import Task from './modules/task';
 import MemberList from './modules/members';
 import MemberForm from './modules/members/MemberForm';
 import TaskForm from './modules/task/TaskForm';
+import PageNotFound from './common/PageNotFound';
 
 const ProtectedRoutes = () => {
   const auth = useAuth();
@@ -31,6 +32,7 @@ function App() {
               <Route path="tasks/new" element={<TaskForm />} />
               <Route path="tasks/:id" element={<TaskForm />} />
             </Route>
+            <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>
       </Router>
