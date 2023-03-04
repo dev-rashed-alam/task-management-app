@@ -4,23 +4,29 @@ import { Link, useNavigate } from 'react-router-dom';
 import { deleteMemberById, fetchAllMembers } from '../../services/memberService';
 import { useDispatch } from 'react-redux';
 import { removeMember, saveAllMembers, useMembers } from '../../redux/member/memberSlice';
+import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
 
 const MemberList = () => {
+  const { members } = useMembers();
   const navigator = useNavigate();
   const dispatch = useDispatch();
-  const { members } = useMembers();
 
   useEffect(() => {
-    fetchAllMembers().then((data) => {
-      dispatch(saveAllMembers(data));
-    });
+    dispatch(openLoader());
+    fetchAllMembers()
+      .then((data) => {
+        dispatch(saveAllMembers(data));
+      })
+      .finally(() => dispatch(closeLoader()));
   }, []);
 
   const handleMemberDelete = async (id) => {
+    dispatch(openLoader());
     const user = await deleteMemberById(id);
     if (user) {
       dispatch(removeMember(id));
     }
+    dispatch(closeLoader());
   };
 
   const renderMemberList = () => {

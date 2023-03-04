@@ -1,3 +1,11 @@
+a{
+    color: #000000 !important;
+    text-decoration: none !important;
+}
+
+.App ._loading_overlay_wrapper{
+    min-height:100%;
+}
 .cursor-pointer{
     cursor: pointer;
 }

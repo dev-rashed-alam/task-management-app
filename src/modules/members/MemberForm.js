@@ -3,21 +3,27 @@ import '../../assets/styles/Form.css';
 import { addNewMember, fetchMemberById, updateMemberById } from '../../services/memberService';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
 
 const MemberForm = () => {
   const [inputData, setInputData] = useState({});
   const [errors, setErrors] = useState({});
   const navigator = useNavigate();
+  const dispatch = useDispatch();
   const { id } = useParams();
 
   useEffect(() => {
     if (id) {
-      fetchMemberById(id).then((data) => {
-        setInputData({
-          name: data.name,
-          email: data.email
-        });
-      });
+      dispatch(openLoader());
+      fetchMemberById(id)
+        .then((data) => {
+          setInputData({
+            name: data.name,
+            email: data.email
+          });
+        })
+        .finally(() => dispatch(closeLoader()));
     }
   }, [id]);
 
@@ -39,7 +45,9 @@ const MemberForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isValidForm()) return;
+    dispatch(openLoader());
     const user = id ? await updateMemberById(id, inputData) : await addNewMember(inputData);
+    dispatch(closeLoader());
     if (user) {
       toast.success(`Member was ${id ? 'updated' : 'created'} successful`);
       navigator('/members');
