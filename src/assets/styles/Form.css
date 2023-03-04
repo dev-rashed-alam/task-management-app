@@ -20,11 +20,11 @@
     box-shadow: none;
 }
 
-.form-select {
+.react-select__control {
     border-radius: 0 !important;
-    height: 50px;
 }
 
-.form-select:focus {
-    box-shadow: none !important;
+.react-select__input-container {
+    height: 48px !important;
+    margin-top: -5px !important;
 }
