@@ -1,7 +1,10 @@
 import React from 'react';
 import '../../assets/styles/Table.css';
+import { useNavigate } from 'react-router-dom';
 
 const MemberList = () => {
+  const navigator = useNavigate();
+
   return (
     <>
       <div className="page-heading mb-2">
@@ -9,7 +12,10 @@ const MemberList = () => {
           <h3>Members page</h3>
         </div>
         <div className="button-wrapper">
-          <button type="submit" className="btn btn-primary custom-btn">
+          <button
+            onClick={() => navigator('/members/new')}
+            type="submit"
+            className="btn btn-primary custom-btn">
             Create new member
           </button>
         </div>

@@ -1,10 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../assets/styles/Form.css';
+import { addNewMember } from '../../services/memberService';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const MemberForm = () => {
+  const [inputData, setInputData] = useState({});
+  const [errors, setErrors] = useState({});
+  const navigator = useNavigate();
+
+  const handleInputChange = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setInputData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const isValidForm = () => {
+    const errorObj = {};
+    if (!inputData.name) {
+      errorObj.name = 'Name is required';
+    }
+    setErrors(errorObj);
+    return Object.keys(errorObj).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!isValidForm()) return;
+    const user = await addNewMember(inputData);
+    if (user) {
+      toast.success('Member was created successful');
+      navigator('/members');
+    }
+  };
+
   return (
     <div className="form-wrapper">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="mb-3 col-md-6">
             <label htmlFor="name">
@@ -16,8 +48,10 @@ const MemberForm = () => {
               className="form-control"
               placeholder="Enter name"
               name="name"
+              value={inputData.name || ''}
+              onChange={handleInputChange}
             />
-            <p className="field-error"></p>
+            <p className="field-error">{errors.name}</p>
           </div>
           <div className="mb-3 col-md-6">
             <label htmlFor="email">Email</label>
@@ -27,6 +61,8 @@ const MemberForm = () => {
               className="form-control"
               placeholder="Enter email"
               name="email"
+              value={inputData.email || ''}
+              onChange={handleInputChange}
             />
           </div>
         </div>

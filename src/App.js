@@ -25,7 +25,7 @@ function App() {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="tasks" element={<Task />} />
               <Route path="members" element={<MemberList />} />
-              <Route path="member/new" element={<MemberForm />} />
+              <Route path="members/new" element={<MemberForm />} />
             </Route>
           </Route>
         </Routes>
