@@ -1,12 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EditorComponent from '../../common/EditorComponent';
 import Select from 'react-select';
 import '../../assets/styles/Form.css';
+import { fetchAllMembers, fetchMemberById, updateMemberById } from '../../services/memberService';
+import { useDispatch } from 'react-redux';
+import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
+import { addNewTask } from '../../services/taskService';
+import toast from 'react-hot-toast';
 
 const TaskForm = () => {
   const [inputData, setInputData] = useState({});
-  const [userList] = useState([]);
+  const [userList, setUserList] = useState([]);
   const [errors, setErrors] = useState({});
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(openLoader());
+    fetchAllMembers()
+      .then((data) => {
+        let users = data.map((user) => ({ label: user.name, value: user.id }));
+        setUserList(users);
+      })
+      .finally(() => dispatch(closeLoader()));
+  }, []);
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -26,9 +42,32 @@ const TaskForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isValidForm()) return;
+    dispatch(openLoader());
+    const postData = {
+      createdAt: Date.now(),
+      title: inputData.title,
+      description: inputData.description,
+      assignTo: inputData.user
+    };
+    const task = await addNewTask(postData);
+    if (task) {
+      if (inputData.user?.value) {
+        const user = await fetchMemberById(inputData.user.value);
+        user.tasks = [...user.tasks, task.id];
+        await updateMemberById(user.id, user);
+      }
+      toast.success(`Task was created successful!`);
+    }
+    dispatch(closeLoader());
   };
 
-  const handleUserSelect = () => {};
+  const handleUserSelect = (user) => {
+    setInputData((prev) => ({ ...prev, user: user }));
+  };
+
+  const onChangeEditor = (data) => {
+    setInputData((prev) => ({ ...prev, description: data }));
+  };
 
   return (
     <div className="form-wrapper">
@@ -56,7 +95,7 @@ const TaskForm = () => {
               isMulti={false}
               classNamePrefix="react-select"
               onChange={handleUserSelect}
-              value={inputData.users || {}}
+              value={inputData.user || {}}
             />
             <p className="field-error">{errors.permissions}</p>
           </div>
@@ -64,7 +103,7 @@ const TaskForm = () => {
             <EditorComponent
               label={'Description'}
               value={inputData.description}
-              onChange={(data) => console.log(data)}
+              onChange={onChangeEditor}
             />
           </div>
         </div>
