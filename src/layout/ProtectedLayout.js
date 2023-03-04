@@ -2,14 +2,23 @@ import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import logo from '../assets/images/logo.png';
 import '../assets/styles/Layout.css';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { doLogout, getUserInfo } from '../services/loginService';
 
 const ProtectedLayout = () => {
+  const { username } = getUserInfo();
+  const navigator = useNavigate();
+
+  const handleLogout = async () => {
+    await doLogout();
+    navigator('/login');
+  };
+
   return (
     <div>
       <Navbar bg="light" expand="lg">
         <Container>
-          <Navbar.Brand href="#">
+          <Link className="navbar-brand" to="/dashboard">
             <img
               src={logo}
               width="30"
@@ -18,16 +27,25 @@ const ProtectedLayout = () => {
               alt="app logo"
             />
             &nbsp;&nbsp; Task management
-          </Navbar.Brand>
+          </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <Nav.Link href="#">Dashboard</Nav.Link>
-              <Nav.Link href="#">Tasks</Nav.Link>
-              <Nav.Link href="#">Members</Nav.Link>
+              <Link to="/dashboard" className="nav-link">
+                Dashboard
+              </Link>
+              <Link to="/tasks" className="nav-link">
+                Tasks
+              </Link>
+              <Link to="/members" className="nav-link">
+                Members
+              </Link>
             </Nav>
             <Navbar.Text>
-              &nbsp;&nbsp;Signed in as: <a href="#">Username</a> | <a href="#">Logout</a>
+              &nbsp;&nbsp;Signed in as: <span>{username}</span> |{' '}
+              <span className="cursor-pointer" onClick={handleLogout}>
+                Logout
+              </span>
             </Navbar.Text>
           </Navbar.Collapse>
         </Container>

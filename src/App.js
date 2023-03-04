@@ -21,7 +21,7 @@ function App() {
             <Route element={<ProtectedLayout />}>
               <Route path="/" element={<Dashboard />} />
               <Route path="dashboard" element={<Dashboard />} />
-              <Route path="task" element={<Task />} />
+              <Route path="tasks" element={<Task />} />
             </Route>
           </Route>
         </Routes>

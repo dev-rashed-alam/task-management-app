@@ -56,3 +56,10 @@ export const getUserInfo = () => {
   }
   return user;
 };
+
+export const doLogout = () => {
+  localStorage.removeItem('username');
+  localStorage.removeItem('email');
+  localStorage.removeItem('name');
+  localStorage.removeItem('token');
+};
