@@ -58,3 +58,7 @@
     height: 40px;
     cursor: pointer;
 }
+
+.crud-table__cell p {
+    color: #000000;
+}
