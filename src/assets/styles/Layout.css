@@ -13,6 +13,6 @@
 
 @media (min-width: 768px) {
     .footer {
-        /*position: static;*/
+        position: static;
     }
 }

@@ -2,13 +2,35 @@ import React, { useEffect } from 'react';
 import '../../assets/styles/Table.css';
 import { useNavigate } from 'react-router-dom';
 import { fetchAllMembers } from '../../services/memberService';
+import { useDispatch } from 'react-redux';
+import { saveAllMembers, useMembers } from '../../redux/member/memberSlice';
 
 const MemberList = () => {
   const navigator = useNavigate();
+  const dispatch = useDispatch();
+  const { members } = useMembers();
 
   useEffect(() => {
-    fetchAllMembers();
+    fetchAllMembers().then((data) => {
+      dispatch(saveAllMembers(data));
+    });
   }, []);
+
+  const renderMemberList = () => {
+    return members?.map((member) => {
+      return (
+        <tr className="crud-table__row" key={`member_${member.id}`}>
+          <td className="crud-table__cell">{member.name}</td>
+          <td className="crud-table__cell">{member.tasks.length}</td>
+          <td className="crud-table__cell">
+            <button className="crud-button crud-button--negative" type="button">
+              Delete
+            </button>
+          </td>
+        </tr>
+      );
+    });
+  };
 
   return (
     <>
@@ -33,17 +55,7 @@ const MemberList = () => {
             <th className="crud-table__header-cell">Actions</th>
           </tr>
         </thead>
-        <tbody className="crud-table__body">
-          <tr className="crud-table__row">
-            <td className="crud-table__cell">38700 Werner Groves</td>
-            <td className="crud-table__cell">Health orchestrate Kansas</td>
-            <td className="crud-table__cell">
-              <button className="crud-button crud-button--negative" type="button">
-                Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
+        <tbody className="crud-table__body">{renderMemberList()}</tbody>
       </table>
     </>
   );
