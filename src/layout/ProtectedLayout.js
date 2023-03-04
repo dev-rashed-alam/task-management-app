@@ -54,7 +54,7 @@ const ProtectedLayout = () => {
             </Navbar.Collapse>
           </Container>
         </Navbar>
-        <Container className="pt-5 pb-5">
+        <Container className="body-container">
           <Outlet />
         </Container>
         <footer className="footer">

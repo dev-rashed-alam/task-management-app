@@ -9,6 +9,9 @@ a{
 .cursor-pointer{
     cursor: pointer;
 }
+.body-container{
+    padding: 50px 0 120px;
+}
 .footer {
     position: absolute;
     bottom: 0;

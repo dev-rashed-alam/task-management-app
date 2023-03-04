@@ -7,12 +7,14 @@ import { useDispatch } from 'react-redux';
 import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
 import { addNewTask } from '../../services/taskService';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const TaskForm = () => {
   const [inputData, setInputData] = useState({});
   const [userList, setUserList] = useState([]);
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
+  const navigator = useNavigate();
 
   useEffect(() => {
     dispatch(openLoader());
@@ -56,6 +58,7 @@ const TaskForm = () => {
         user.tasks = [...user.tasks, task.id];
         await updateMemberById(user.id, user);
       }
+      navigator('/task');
       toast.success(`Task was created successful!`);
     }
     dispatch(closeLoader());

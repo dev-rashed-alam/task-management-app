@@ -1,7 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../assets/styles/Table.css';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
+import { fetchAllTasks } from '../../services/taskService';
 
 const TaskList = () => {
+  const [tasks, setTasks] = useState([]);
+  const navigator = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(openLoader());
+    fetchAllTasks()
+      .then((data) => {
+        setTasks(data);
+      })
+      .finally(() => dispatch(closeLoader()));
+  }, []);
+
+  const renderTasks = () => {
+    return tasks?.map((task) => {
+      return (
+        <tr className="crud-table__row" key={`task_${task.id}`}>
+          <td className="crud-table__cell">{task.title}</td>
+          <td className="crud-table__cell">
+            <p dangerouslySetInnerHTML={{ __html: task.description }} />
+          </td>
+          <td className="crud-table__cell">{task.assignTo?.label}</td>
+          <td className="crud-table__cell">
+            <button className="crud-button crud-button--negative" type="button">
+              Delete
+            </button>
+          </td>
+        </tr>
+      );
+    });
+  };
+
   return (
     <>
       <div className="page-heading mb-2">
@@ -9,7 +45,10 @@ const TaskList = () => {
           <h3>Tasks page</h3>
         </div>
         <div className="button-wrapper">
-          <button type="submit" className="btn btn-primary custom-btn">
+          <button
+            type="submit"
+            className="btn btn-primary custom-btn"
+            onClick={() => navigator('/tasks/new')}>
             Create new task
           </button>
         </div>
@@ -23,18 +62,7 @@ const TaskList = () => {
             <th className="crud-table__header-cell">Actions</th>
           </tr>
         </thead>
-        <tbody className="crud-table__body">
-          <tr className="crud-table__row">
-            <td className="crud-table__cell">38700 Werner Groves</td>
-            <td className="crud-table__cell">Health orchestrate Kansas</td>
-            <td className="crud-table__cell">Rashed</td>
-            <td className="crud-table__cell">
-              <button className="crud-button crud-button--negative" type="button">
-                Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
+        <tbody className="crud-table__body">{renderTasks()}</tbody>
       </table>
     </>
   );
