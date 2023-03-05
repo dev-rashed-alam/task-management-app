@@ -1,4 +1,4 @@
-# Task management web app - BS 23 screening test
+# Task management web app - BS 23 practical Test
 
 ***
 
