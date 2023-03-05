@@ -7,6 +7,12 @@ import { useDispatch } from 'react-redux';
 import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
 import AssignedTasks from './component/AssignedTasks';
 
+/**
+ * The MemberForm component to be displayed when the "/members/new" or "/members/:id path is accessed.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 const MemberForm = () => {
   const [inputData, setInputData] = useState({});
   const [errors, setErrors] = useState({});

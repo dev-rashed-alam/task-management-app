@@ -2,6 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/styles/NotFound.css';
 
+/**
+ * The NotFound component to be displayed when no matching path is found.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 const PageNotFound = () => {
   return (
     <section className="page_404">

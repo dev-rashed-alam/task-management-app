@@ -1,6 +1,12 @@
 import React from 'react';
 import { changeDate } from '../../../helpers/helpers';
 
+/**
+ * The AssignedTasks component to be displayed when this component get tasks props with value.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 const AssignedTasks = ({ tasks }) => {
   const renderTasks = () => {
     return tasks?.map((task) => {

@@ -8,6 +8,12 @@ import { removeTask, saveAllTasks, useTasks } from '../../redux/task/taskSlice';
 import { changeDate } from '../../helpers/helpers';
 import { removeTaskFromMemberByTaskId } from '../../services/memberService';
 
+/**
+ * The TaskList component to be displayed when the "/tasks" path is accessed.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 const TaskList = () => {
   const { tasks } = useTasks();
   const navigator = useNavigate();

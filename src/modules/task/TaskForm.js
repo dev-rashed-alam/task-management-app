@@ -10,6 +10,12 @@ import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getUniqueDataSet } from '../../helpers/helpers';
 
+/**
+ * The TaskForm component to be displayed when the "/tasks/new" or "/tasks/:id path is accessed.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 const TaskForm = () => {
   const [inputData, setInputData] = useState({});
   const [prevAssignedUser, setPrevAssignedUser] = useState({});
@@ -74,6 +80,9 @@ const TaskForm = () => {
     }
     const task = id ? await updateTaskById(id, postData) : await addNewTask(postData);
     if (task) {
+      /**
+       * Responsible for if assign to is selected and if there is no previous assigned user or previous assigned user and current selected user is not matched
+       */
       if (inputData.user?.value && prevAssignedUser?.value !== inputData.user?.value) {
         const userData = await fetchMemberById(inputData.user.value);
         userData.tasks = [...userData.tasks, task];
@@ -83,6 +92,9 @@ const TaskForm = () => {
         });
       }
 
+      /**
+       * Responsible for removing task from previous assigned user if previous assigned user and current selected user is not matched
+       */
       if (prevAssignedUser?.value && prevAssignedUser.value !== inputData.user?.value) {
         const userData = await fetchMemberById(prevAssignedUser.value);
         let newTasks = userData.tasks.filter((item) => parseInt(item.id) !== parseInt(task.id));

@@ -4,6 +4,12 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '../assets/styles/Editor.css';
 
+/**
+ * The EditorComponent for rich text editor.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 const EditorComponent = ({ label, value, onChange }) => {
   return (
     <Form.Group>

@@ -5,6 +5,12 @@ import '../assets/styles/Layout.css';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { doLogout, getUserInfo } from '../services/loginService';
 
+/**
+ * The ProtectedLayout component to be displayed when any of the protected path is accessed
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 const ProtectedLayout = () => {
   const { username } = getUserInfo();
   const navigator = useNavigate();

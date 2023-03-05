@@ -12,12 +12,25 @@ import PageNotFound from './common/PageNotFound';
 import LoaderComponent from './common/LoaderComponent';
 import { useLoader } from './redux/loader/loaderSlice';
 
+/**
+ * validate the route request as authenticated or not
+ *
+ * @function
+ * @returns {JSX.Element}
+ */
 const ProtectedRoutes = () => {
   const auth = useAuth();
   return auth ? <Outlet /> : <Navigate to="/login" />;
 };
 
-function App() {
+/**
+ * Defines the routing configuration for the application.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
+
+const App = () => {
   const loader = useLoader();
 
   return (
@@ -45,6 +58,6 @@ function App() {
       </LoaderComponent>
     </div>
   );
-}
+};
 
 export default App;

@@ -6,6 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
 import { useDispatch } from 'react-redux';
 
+/**
+ * The Login component to be displayed when the "/login" path is accessed.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 const Login = () => {
   const [inputData, setInputData] = useState({});
   const [errors, setErrors] = useState({});

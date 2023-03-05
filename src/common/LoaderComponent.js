@@ -2,6 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LoadingOverlay from 'react-loading-overlay';
 
+/**
+ * The LoaderComponent to be displayed when the isLoading props is true.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 const LoaderComponent = ({ isLoading = false, children }) => {
   LoadingOverlay.propTypes = undefined;
   return (

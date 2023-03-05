@@ -6,6 +6,12 @@ import { useDispatch } from 'react-redux';
 import { removeMember, saveAllMembers, useMembers } from '../../redux/member/memberSlice';
 import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
 
+/**
+ * The MemberList component to be displayed when the "/members" path is accessed.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 const MemberList = () => {
   const { members } = useMembers();
   const navigator = useNavigate();
