@@ -6,6 +6,7 @@ import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
 import { deleteTaskById, fetchAllTasks } from '../../services/taskService';
 import { removeTask, saveAllTasks, useTasks } from '../../redux/task/taskSlice';
 import { changeDate } from '../../helpers/helpers';
+import { removeTaskFromMemberByTaskId } from '../../services/memberService';
 
 const TaskList = () => {
   const { tasks } = useTasks();
@@ -25,6 +26,9 @@ const TaskList = () => {
     dispatch(openLoader());
     const task = await deleteTaskById(id);
     if (task) {
+      if (task.assignTo?.value) {
+        await removeTaskFromMemberByTaskId(task.id, task.assignTo.value);
+      }
       dispatch(removeTask(id));
     }
     dispatch(closeLoader());

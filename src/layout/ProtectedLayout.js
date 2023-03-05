@@ -30,7 +30,7 @@ const ProtectedLayout = () => {
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
+            <Nav className="ms-auto pe-3">
               <NavLink to="/dashboard" className="nav-link">
                 Dashboard
               </NavLink>
@@ -42,7 +42,7 @@ const ProtectedLayout = () => {
               </NavLink>
             </Nav>
             <Navbar.Text>
-              &nbsp;&nbsp;Signed in as: <span>{username}</span> |{' '}
+              Signed in as: <span>{username}</span> |{' '}
               <span className="cursor-pointer" onClick={handleLogout}>
                 Logout
               </span>
