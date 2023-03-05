@@ -2,7 +2,7 @@ import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import logo from '../assets/images/logo.png';
 import '../assets/styles/Layout.css';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { doLogout, getUserInfo } from '../services/loginService';
 
 const ProtectedLayout = () => {
@@ -31,15 +31,15 @@ const ProtectedLayout = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <Link to="/dashboard" className="nav-link">
+              <NavLink to="/dashboard" className="nav-link">
                 Dashboard
-              </Link>
-              <Link to="/tasks" className="nav-link">
+              </NavLink>
+              <NavLink to="/tasks" className="nav-link">
                 Tasks
-              </Link>
-              <Link to="/members" className="nav-link">
+              </NavLink>
+              <NavLink to="/members" className="nav-link">
                 Members
-              </Link>
+              </NavLink>
             </Nav>
             <Navbar.Text>
               &nbsp;&nbsp;Signed in as: <span>{username}</span> |{' '}

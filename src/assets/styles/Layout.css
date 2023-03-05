@@ -8,6 +8,10 @@ a{
     text-decoration: none !important;
 }
 
+.active{
+    color: dodgerblue !important;
+}
+
 .App ._loading_overlay_wrapper{
     min-height:100%;
 }

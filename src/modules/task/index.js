@@ -38,8 +38,8 @@ const TaskList = () => {
             <Link to={`/tasks/${task.id}`}>{task.title}</Link>
           </td>
           <td className="crud-table__cell" dangerouslySetInnerHTML={{ __html: task.description }} />
-          <td className="crud-table__cell">{task.assignTo?.label}</td>
           <td className="crud-table__cell">{changeDate(task.createdAt)}</td>
+          <td className="crud-table__cell">{task.assignTo?.label}</td>
           <td className="crud-table__cell">
             <button
               className="crud-button crud-button--negative"
