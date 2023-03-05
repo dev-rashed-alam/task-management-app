@@ -22,3 +22,7 @@ export const changeDate = (date) => {
   const dateObj = new Date(date);
   return moment(dateObj).format('DD MMM, YY');
 };
+
+export const getUniqueDataSet = (data, key) => {
+  return [...new Map(data.map((item) => [item[key], item])).values()];
+};

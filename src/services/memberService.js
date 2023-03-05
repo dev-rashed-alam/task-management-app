@@ -3,7 +3,11 @@ import apiHandler from '../common/apiHandler';
 
 export const addNewMember = async (requestBody) => {
   try {
-    const { data } = await apiHandler.POST('members', requestBody);
+    let postData = {
+      name: requestBody.name,
+      email: requestBody.email || ''
+    };
+    const { data } = await apiHandler.POST('members', postData);
     return data;
   } catch ({ response }) {
     if (response.data.message) {
@@ -42,7 +46,11 @@ export const fetchMemberById = async (id) => {
 
 export const updateMemberById = async (id, requestBody) => {
   try {
-    const { data } = await apiHandler.PUT('members', id, requestBody);
+    let postData = {
+      name: requestBody.name,
+      email: requestBody.email || ''
+    };
+    const { data } = await apiHandler.PUT('members', id, postData);
     return data;
   } catch ({ response }) {
     if (response.data.message) {

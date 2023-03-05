@@ -5,10 +5,12 @@ import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
+import AssignedTasks from './component/AssignedTasks';
 
 const MemberForm = () => {
   const [inputData, setInputData] = useState({});
   const [errors, setErrors] = useState({});
+  const [assignedTasks, setAssignedTasks] = useState([]);
   const navigator = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -22,6 +24,9 @@ const MemberForm = () => {
             name: data.name,
             email: data.email
           });
+          if (data.tasks?.length > 0) {
+            setAssignedTasks(data.tasks);
+          }
         })
         .finally(() => dispatch(closeLoader()));
     }
@@ -55,44 +60,52 @@ const MemberForm = () => {
   };
 
   return (
-    <div className="form-wrapper">
-      <form onSubmit={handleSubmit}>
-        <div className="row">
-          <div className="mb-3 col-md-6">
-            <label htmlFor="name">
-              Name<span className="star">*</span>
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="form-control"
-              placeholder="Enter name"
-              name="name"
-              value={inputData.name || ''}
-              onChange={handleInputChange}
-            />
-            <p className="field-error">{errors.name}</p>
+    <>
+      <div className="form-wrapper">
+        <form onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="mb-3 col-md-6">
+              <label htmlFor="name">
+                Name<span className="star">*</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                className="form-control"
+                placeholder="Enter name"
+                name="name"
+                value={inputData.name || ''}
+                onChange={handleInputChange}
+              />
+              <p className="field-error">{errors.name}</p>
+            </div>
+            <div className="mb-3 col-md-6">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                className="form-control"
+                placeholder="Enter email"
+                name="email"
+                value={inputData.email || ''}
+                onChange={handleInputChange}
+              />
+            </div>
           </div>
-          <div className="mb-3 col-md-6">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              className="form-control"
-              placeholder="Enter email"
-              name="email"
-              value={inputData.email || ''}
-              onChange={handleInputChange}
-            />
+          <div>
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
           </div>
+        </form>
+      </div>
+
+      {assignedTasks.length > 0 && (
+        <div className="assigned-task">
+          <AssignedTasks tasks={assignedTasks} />
         </div>
-        <div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+      )}
+    </>
   );
 };
 

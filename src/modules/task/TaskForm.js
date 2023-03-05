@@ -8,6 +8,7 @@ import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
 import { addNewTask, fetchTaskById, updateTaskById } from '../../services/taskService';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
+import { getUniqueDataSet } from '../../helpers/helpers';
 
 const TaskForm = () => {
   const [inputData, setInputData] = useState({});
@@ -75,16 +76,19 @@ const TaskForm = () => {
     if (task) {
       if (inputData.user?.value && prevAssignedUser?.value !== inputData.user?.value) {
         const userData = await fetchMemberById(inputData.user.value);
-        userData.tasks = [...userData.tasks, task.id];
-        await updateMemberById(userData.id, { ...userData, tasks: [...new Set(userData.tasks)] });
+        userData.tasks = [...userData.tasks, task];
+        await updateMemberById(userData.id, {
+          ...userData,
+          tasks: getUniqueDataSet(userData.tasks, 'id')
+        });
       }
 
       if (prevAssignedUser?.value && prevAssignedUser.value !== inputData.user?.value) {
         const userData = await fetchMemberById(prevAssignedUser.value);
-        let newTasks = userData.tasks.filter((item) => parseInt(item) !== parseInt(task.id));
+        let newTasks = userData.tasks.filter((item) => parseInt(item.id) !== parseInt(task.id));
         await updateMemberById(prevAssignedUser.value, {
           ...userData,
-          tasks: [...new Set(newTasks)]
+          tasks: getUniqueDataSet(newTasks, 'id')
         });
       }
       navigator('/tasks');
