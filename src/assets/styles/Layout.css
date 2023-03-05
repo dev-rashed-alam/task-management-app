@@ -1,3 +1,8 @@
+.App, a, p, span, td, .custom-btn, .btn {
+    font-size: 17px !important;
+    font-weight: 400 !important;
+    font-family: 'Fira Sans', sans-serif !important;
+}
 a{
     color: #000000 !important;
     text-decoration: none !important;

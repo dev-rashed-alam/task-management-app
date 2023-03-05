@@ -9,6 +9,8 @@ import MemberList from './modules/members';
 import MemberForm from './modules/members/MemberForm';
 import TaskForm from './modules/task/TaskForm';
 import PageNotFound from './common/PageNotFound';
+import LoaderComponent from './common/LoaderComponent';
+import { useLoader } from './redux/loader/loaderSlice';
 
 const ProtectedRoutes = () => {
   const auth = useAuth();
@@ -16,27 +18,31 @@ const ProtectedRoutes = () => {
 };
 
 function App() {
+  const loader = useLoader();
+
   return (
     <div className="App">
-      <Router>
-        <Routes>
-          <Route path="login" element={<Login />} />
-          <Route path="/" element={<ProtectedRoutes />}>
-            <Route element={<ProtectedLayout />}>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="members" element={<MemberList />} />
-              <Route path="members/new" element={<MemberForm />} />
-              <Route path="member/:id" element={<MemberForm />} />
-              <Route path="tasks" element={<Task />} />
-              <Route path="tasks/new" element={<TaskForm />} />
-              <Route path="tasks/:id" element={<TaskForm />} />
+      <LoaderComponent isLoading={loader}>
+        <Router>
+          <Routes>
+            <Route path="login" element={<Login />} />
+            <Route path="/" element={<ProtectedRoutes />}>
+              <Route element={<ProtectedLayout />}>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="members" element={<MemberList />} />
+                <Route path="members/new" element={<MemberForm />} />
+                <Route path="member/:id" element={<MemberForm />} />
+                <Route path="tasks" element={<Task />} />
+                <Route path="tasks/new" element={<TaskForm />} />
+                <Route path="tasks/:id" element={<TaskForm />} />
+              </Route>
+              <Route path="*" element={<PageNotFound />} />
             </Route>
-            <Route path="*" element={<PageNotFound />} />
-          </Route>
-        </Routes>
-      </Router>
-      <Toaster position="top-right" reverseOrder={false} />
+          </Routes>
+        </Router>
+        <Toaster position="top-right" reverseOrder={false} />
+      </LoaderComponent>
     </div>
   );
 }

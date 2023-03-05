@@ -22,6 +22,7 @@ body, html, .App, #root, .auth-wrapper {
 }
 
 .auth-wrapper {
+    height: 100vh;
     display: flex;
     justify-content: center;
     flex-direction: column;

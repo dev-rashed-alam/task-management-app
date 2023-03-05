@@ -3,11 +3,14 @@ import '../../assets/styles/Login.css';
 import { doLogin, setLocalStorage } from '../../services/loginService';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { closeLoader, openLoader } from '../../redux/loader/loaderSlice';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
   const [inputData, setInputData] = useState({});
   const [errors, setErrors] = useState({});
   const navigator = useNavigate();
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -35,8 +38,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isValidForm()) return;
+    dispatch(openLoader());
     const data = await doLogin(inputData, handleInvalidCredential);
+    dispatch(closeLoader());
     if (data) {
+      toast.success('Login successful!');
       await setLocalStorage(data);
       navigator('/dashboard');
     }
