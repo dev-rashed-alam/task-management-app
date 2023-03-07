@@ -45,7 +45,9 @@ const TaskList = () => {
       return (
         <tr className="crud-table__row" key={`task_${task.id}`}>
           <td className="crud-table__cell">
-            <Link to={`/tasks/${task.id}`}>{task.title}</Link>
+            <Link to={`/tasks/${task.id}`} className="clickable">
+              {task.title}
+            </Link>
           </td>
           <td className="crud-table__cell" dangerouslySetInnerHTML={{ __html: task.description }} />
           <td className="crud-table__cell">{changeDate(task.createdAt)}</td>
@@ -88,7 +90,10 @@ const TaskList = () => {
             <th className="crud-table__header-cell">Actions</th>
           </tr>
         </thead>
-        <tbody className="crud-table__body">{renderTasks()}</tbody>
+        <tbody className="crud-table__body">
+          {renderTasks()}
+          {tasks.length === 0 && <p className="pt-2 pb-2 text-muted">No task found!</p>}
+        </tbody>
       </table>
     </>
   );

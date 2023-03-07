@@ -40,7 +40,9 @@ const MemberList = () => {
       return (
         <tr className="crud-table__row" key={`member_${member.id}`}>
           <td className="crud-table__cell">
-            <Link to={`/member/${member.id}`}>{member.name}</Link>
+            <Link to={`/member/${member.id}`} className="clickable">
+              {member.name}
+            </Link>
           </td>
           <td className="crud-table__cell">{member.tasks.length}</td>
           <td className="crud-table__cell">
@@ -79,7 +81,10 @@ const MemberList = () => {
             <th className="crud-table__header-cell">Actions</th>
           </tr>
         </thead>
-        <tbody className="crud-table__body">{renderMemberList()}</tbody>
+        <tbody className="crud-table__body">
+          {renderMemberList()}
+          {members.length === 0 && <p className="pt-2 pb-2 text-muted">No member found!</p>}
+        </tbody>
       </table>
     </>
   );

@@ -62,3 +62,7 @@
 .crud-table__cell p {
     color: #000000;
 }
+
+.clickable {
+    text-decoration: underline !important;
+}
